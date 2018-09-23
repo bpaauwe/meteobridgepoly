@@ -5,6 +5,7 @@ import re
 import os
 import zipfile
 import json
+import uom
 
 pfx = "write_profile:"
 
@@ -14,101 +15,6 @@ VERSION_FILE = "profile/version.txt"
 # sensor node will have a pre-defined list of drivers. When we build
 # the node definition, we get to pick which drivers we include based on
 # the user's configuration.
-
-# Configuration will be something like this:
-#
-#   temperature.main = <wdtemp>
-#   temperature.dewpoint = <>
-#   temperature.windchill = <>
-#   temperature.heatindex = <>
-#   temperature.apparent = <>
-#   temperature.inside = <>
-#   temperature.extra1 = <>
-#   temperature.extra2 = <>
-#   temperature.extra3 = <>
-#   temperature.extra4 = <>
-#   temperature.extra5 = <>
-#   temperature.extra6 = <>
-#   temperature.extra7 = <>
-#   temperature.extra8 = <>
-#   temperature.extra9 = <>
-#   temperature.extra10 = <>
-
-TEMP_DRVS = {
-        'main' : 'ST',
-        'dewpoint' : 'GV0',
-        'windchill' : 'GV1',
-        'heatindex' : 'GV2',
-        'apparent' : 'GV3',
-        'inside' : 'GV4',
-        'extra1' : 'GV5',
-        'extra2' : 'GV6',
-        'extra3' : 'GV7',
-        'extra4' : 'GV8',
-        'extra5' : 'GV9',
-        'extra6' : 'GV10',
-        'extra7' : 'GV11',
-        'extra8' : 'GV12',
-        'extra9' : 'GV13',
-        'extra10' : 'GV14',
-        'max' : 'GV15',
-        'min' : 'GV16',
-        'soil' : 'GV17',
-        }
-
-HUMD_DRVS = {
-        'main' : 'ST',
-        'inside' : 'GV0',
-        'extra1' : 'GV1',
-        'extra2' : 'GV2',
-        'extra3' : 'GV3',
-        'extra4' : 'GV4',
-        'extra5' : 'GV5',
-        }
-
-PRES_DRVS = {
-        'station' : 'ST',
-        'sealevel' : 'GV0',
-        'trend' : 'GV1'
-        }
-
-WIND_DRVS = {
-        'windspeed' : 'ST',
-        'winddir' : 'GV0',
-        'gustspeed' : 'GV1',
-        'gustdir' : 'GV2',
-        'lullspeed' : 'GV3',
-        'avgwindspeed' : 'GV4',
-        }
-
-RAIN_DRVS = {
-        'rate' : 'ST',
-        'hourly' : 'GV0',
-        'daily' : 'GV1',
-        'weekly' : 'GV2',
-        'monthly' : 'GV3',
-        'yearly' : 'GV4',
-        'maxrate' : 'GV5',
-        'yesterday' : 'GV6',
-        'total' : 'GV7',
-        }
-
-LITE_DRVS = {
-        'uv' : 'ST',
-        'solar_radiation' : 'GV0',
-        'illuminace' : 'GV1'
-        }
-LITE_EDIT = {
-        'uv' : 'I_UV',
-        'solar_radiation' : 'I_RADIATION',
-        'illuminace' : 'I_LUX'
-        }
-
-
-LTNG_DRVS = {
-        'strikes' : 'ST',
-        'distance' : 'GV0'
-        }
 
 
 NODEDEF_TMPL = "  <nodeDef id=\"%s\" nodeType=\"139\" nls=\"%s\">\n"
@@ -153,7 +59,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('temperature', '139T'))
         nodedef.write("    <sts>\n")
         for t in temperature_list:
-            nodedef.write(STATUS_TMPL % (TEMP_DRVS[t], temperature_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.TEMP_DRVS[t], temperature_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -161,7 +67,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('humidity', '139H'))
         nodedef.write("    <sts>\n")
         for t in humidity_list:
-            nodedef.write(STATUS_TMPL % (HUMD_DRVS[t], humidity_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.HUMD_DRVS[t], humidity_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -169,7 +75,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('pressure', '139P'))
         nodedef.write("    <sts>\n")
         for t in pressure_list:
-            nodedef.write(STATUS_TMPL % (PRES_DRVS[t], pressure_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.PRES_DRVS[t], pressure_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -177,7 +83,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('wind', '139W'))
         nodedef.write("    <sts>\n")
         for t in wind_list:
-            nodedef.write(STATUS_TMPL % (WIND_DRVS[t], wind_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.WIND_DRVS[t], wind_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -185,7 +91,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('precipitation', '139R'))
         nodedef.write("    <sts>\n")
         for t in rain_list:
-            nodedef.write(STATUS_TMPL % (RAIN_DRVS[t], rain_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.RAIN_DRVS[t], rain_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -193,7 +99,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('light', '139L'))
         nodedef.write("    <sts>\n")
         for t in light_list:
-            nodedef.write(STATUS_TMPL % (LITE_DRVS[t], light_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.LITE_DRVS[t], light_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
@@ -201,7 +107,7 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         nodedef.write(NODEDEF_TMPL % ('lightning', '139S'))
         nodedef.write("    <sts>\n")
         for t in lightning_list:
-            nodedef.write(STATUS_TMPL % (LTNG_DRVS[t], lightning_list[t]))
+            nodedef.write(STATUS_TMPL % (uom.LTNG_DRVS[t], lightning_list[t]))
         nodedef.write("    </sts>\n")
         nodedef.write("  </nodeDef>\n")
 
