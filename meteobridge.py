@@ -36,15 +36,19 @@ class Controller(polyinterface.Controller):
         self.rain_list = {}
         self.light_list = {}
         self.lightning_list = {}
+        self.myConfig = {}  # custom parameters
 
-        #self.poly.onConfig(self.process_config)
+        self.poly.onConfig(self.process_config)
 
     def process_config(self, config):
-        # this seems to get called twice for every change, why?
-        # What does config represent?
-        LOGGER.info("process_config: Enter");
-
-        LOGGER.info("Finished with configuration.")
+        if 'customParams' in config:
+            if config['customParams'] != self.myConfig:
+                # Configuration has changed, we need to handle it
+                LOGGER.info('New configuration, updating configuration')
+                self.set_configuration(config)
+                self.setup_nodedefs(self.units)
+                self.discover()
+                self.myConfig = config['customParams']
 
     def start(self):
         LOGGER.info('Starting MeteoBridge Node Server')
@@ -65,40 +69,39 @@ class Controller(polyinterface.Controller):
             sock.sendall(header.encode())
             xmldata = sock.recv(2048)
 
-            LOGGER.info(xmldata)
+            LOGGER.debug(xmldata)
             # Parse the XML data
             try:
                 tree = ET.XML(xmldata.decode())
 
-                LOGGER.info('tag = ' + tree.tag)
+                LOGGER.debug('tag = ' + tree.tag)
                 for child in tree.getchildren():
-                    LOGGER.info('   child = ' + child.tag)
+                    LOGGER.debug('   child = ' + child.tag)
                     if child.tag == 'UV':
                         self.nodes['light'].setDriver(
                            uom.LITE_DRVS['uv'], float(child.get('index')))
-                        LOGGER.info('    UV index = ' + child.get('index'))
+                        LOGGER.debug('    UV index = ' + child.get('index'))
                     elif child.tag == 'SOL':
-                        LOGGER.info('    Solar   = ' + child.get('rad'))
+                        LOGGER.debug('    Solar   = ' + child.get('rad'))
                         self.nodes['light'].setDriver(
                             uom.LITE_DRVS['solar_radiation'],
                             float(child.get('rad')))
                     elif child.tag == 'RAIN':
-                        LOGGER.info('    Rate    = ' + child.get('rate'))
-                        LOGGER.info('    Delta   = ' + child.get('delta'))
-                        LOGGER.info('    Total   = ' + child.get('total'))
+                        LOGGER.debug('    Rate    = ' + child.get('rate'))
+                        LOGGER.debug('    Delta   = ' + child.get('delta'))
+                        LOGGER.debug('    Total   = ' + child.get('total'))
                         self.nodes['rain'].setDriver(
                             uom.RAIN_DRVS['rate'], float(child.get('rate')))
                         self.nodes['rain'].setDriver(
                             uom.RAIN_DRVS['total'], float(child.get('total')))
                     elif child.tag == 'TH':
-                        LOGGER.info('    Dewpoin = ' + child.get('dew'))
-                        LOGGER.info('    Humidit = ' + child.get('hum'))
-                        LOGGER.info('    Temp    = ' + child.get('temp'))
+                        LOGGER.debug('    Dewpoin = ' + child.get('dew'))
+                        LOGGER.debug('    Humidit = ' + child.get('hum'))
+                        LOGGER.debug('    Temp    = ' + child.get('temp'))
                     elif child.tag == 'THB':
                         self.nodes['temperature'].setDriver(
                             uom.TEMP_DRVS['dewpoint'],
                             float(child.get('dew')))
-                        LOGGER.info('  Temp = %s to %f' % (self.temperature_list['main'], float(child.get('temp'))))
                         self.nodes['temperature'].setDriver(
                             uom.TEMP_DRVS['main'], float(child.get('temp')))
                         self.nodes['humidity'].setDriver(
@@ -106,13 +109,13 @@ class Controller(polyinterface.Controller):
                         self.nodes['pressure'].setDriver(
                             uom.PRES_DRVS['station'], float(child.get('press')))
                         self.nodes['pressure'].setDriver(
-                            wuom.PRES_DRVS['sealevel'],
+                            uom.PRES_DRVS['sealevel'],
                             float(child.get('seapress')))
-                        LOGGER.info('    Dewpoin = ' + child.get('dew'))
-                        LOGGER.info('    Humidit = ' + child.get('hum'))
-                        LOGGER.info('    Temp    = ' + child.get('temp'))
-                        LOGGER.info('    Sea     = ' + child.get('seapress'))
-                        LOGGER.info('    pressur = ' + child.get('press'))
+                        LOGGER.debug('    Dewpoin = ' + child.get('dew'))
+                        LOGGER.debug('    Humidit = ' + child.get('hum'))
+                        LOGGER.debug('    Temp    = ' + child.get('temp'))
+                        LOGGER.debug('    Sea     = ' + child.get('seapress'))
+                        LOGGER.debug('    pressur = ' + child.get('press'))
                     elif child.tag == 'WIND':
                         self.nodes['temperature'].setDriver(
                             uom.TEMP_DRVS['windchill'],
@@ -123,13 +126,13 @@ class Controller(polyinterface.Controller):
                             uom.WIND_DRVS['gustspeed'], float(child.get('gust')))
                         self.nodes['wind'].setDriver(
                             uom.WIND_DRVS['winddir'], float(child.get('dir')))
-                        LOGGER.info('    chill   = ' + child.get('chill'))
-                        LOGGER.info('    wind    = ' + child.get('wind'))
-                        LOGGER.info('    gust    = ' + child.get('gust'))
-                        LOGGER.info('    direct  = ' + child.get('dir'))
+                        LOGGER.debug('    chill   = ' + child.get('chill'))
+                        LOGGER.debug('    wind    = ' + child.get('wind'))
+                        LOGGER.debug('    gust    = ' + child.get('gust'))
+                        LOGGER.debug('    direct  = ' + child.get('dir'))
 
             except:
-                LOGGER.info("Failure while parsing MeteoBridge data.")
+                LOGGER.error("Failure while parsing MeteoBridge data.")
         finally:
             sock.close()
 
@@ -219,14 +222,6 @@ class Controller(polyinterface.Controller):
                         })
         self.addNode(node)
 
-        #self.addNode(TemperatureNode(self, self.address, 'temperature', 'Temperatures'))
-        #self.addNode(HumidityNode(self, self.address, 'humidity', 'Humidity'))
-        #self.addNode(PressureNode(self, self.address, 'pressure', 'Barometric Pressure'))
-        #self.addNode(WindNode(self, self.address, 'wind', 'Wind'))
-        #self.addNode(PrecipitationNode(self, self.address, 'rain', 'Precipitation'))
-        #self.addNode(LightNode(self, self.address, 'light', 'Illumination'))
-        #self.addNode(LightningNode(self, self.address, 'lightning', 'Lightning'))
-
     def delete(self):
         self.stopping = True
         LOGGER.info('Removing MeteoBridge node server.')
@@ -236,45 +231,11 @@ class Controller(polyinterface.Controller):
         LOGGER.debug('Stopping MeteoBridge node server.')
 
     def check_params(self):
-        default_port = 5557
-        default_ip = ""
-        default_elevation = 0
+        self.set_configuration(self.polyConfig)
+        self.setup_nodedefs(self.units)
 
-        LOGGER.info("Check for existing configuration value")
-
-        if 'Port' in self.polyConfig['customParams']:
-            self.port = int(self.polyConfig['customParams']['UDPPort'])
-        else:
-            self.udp_port = default_port
-
-        if 'IPAddress' in self.polyConfig['customParams']:
-            self.ip = self.polyConfig['customParams']['IPAddress']
-        else:
-            self.ip = default_ip
-
-        if 'Units' in self.polyConfig['customParams']:
-            self.units = self.polyConfig['customParams']['Units']
-        else:
-            self.units = 'metric'
-
-        # How fixed is this node server?  Do we only need to create
-        # mappings so that we can create nodes with the correct UOM?
-
-        self.temperature_list['main'] = 'TEMP_F' if self.units == 'us' else 'TEMP_C'
-        self.temperature_list['dewpoint'] = 'TEMP_F' if self.units == 'us' else 'TEMP_C'
-        self.temperature_list['windchill'] = 'TEMP_F' if self.units == 'us' else 'TEMP_C'
-        self.humidity_list['main'] = 'I_HUMIDITY'
-        self.pressure_list['station'] = 'I_INHG' if self.units == 'us' else 'I_MB'
-        self.pressure_list['sealevel'] = 'I_INHG' if self.units == 'us' else 'I_MB'
-        self.wind_list['windspeed'] = 'I_MPS' if self.units == 'metric' else 'I_MPH'
-        self.wind_list['gustspeed'] = 'I_MPS' if self.units == 'metric' else 'I_MPH'
-        self.wind_list['winddir'] = 'I_DEGREE'
-        self.rain_list['rate'] = 'I_MMHR' if self.units == 'metric' else 'I_INHR'
-        self.rain_list['total'] = 'I_MM' if self.units == 'metric' else 'I_INCH'
-        self.light_list['uv'] = 'I_UV'
-        self.light_list['solar_radiation'] = 'I_RADIATION'
-
-        # Make sure they are in the params
+        # Make sure they are in the params  -- does this cause a 
+        # configuration event?
         LOGGER.info("Adding configuation")
         self.addCustomParam({
                     'UDPPort': self.port,
@@ -282,8 +243,57 @@ class Controller(polyinterface.Controller):
                     'Units': self.units,
                     })
 
+        self.myConfig = self.polyConfig['customParams']
+
+        # Remove all existing notices
+        LOGGER.info("remove all notices")
+        self.removeNoticesAll()
+
+        # Add a notice?
+
+    def set_configuration(self, config):
+        default_port = 5557
+        default_ip = ""
+        default_elevation = 0
+
+        LOGGER.info("Check for existing configuration value")
+
+        if 'Port' in config['customParams']:
+            self.port = int(config['customParams']['UDPPort'])
+        else:
+            self.udp_port = default_port
+
+        if 'IPAddress' in config['customParams']:
+            self.ip = config['customParams']['IPAddress']
+        else:
+            self.ip = default_ip
+
+        if 'Units' in config['customParams']:
+            self.units = config['customParams']['Units']
+        else:
+            self.units = 'metric'
+
+        return self.units
+
+    def setup_nodedefs(self, units):
+
+        # Configure the units for each node driver
+        self.temperature_list['main'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
+        self.temperature_list['dewpoint'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
+        self.temperature_list['windchill'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
+        self.humidity_list['main'] = 'I_HUMIDITY'
+        self.pressure_list['station'] = 'I_INHG' if units == 'us' else 'I_MB'
+        self.pressure_list['sealevel'] = 'I_INHG' if units == 'us' else 'I_MB'
+        self.wind_list['windspeed'] = 'I_MPS' if units == 'metric' else 'I_MPH'
+        self.wind_list['gustspeed'] = 'I_MPS' if units == 'metric' else 'I_MPH'
+        self.wind_list['winddir'] = 'I_DEGREE'
+        self.rain_list['rate'] = 'I_MMHR' if units == 'metric' else 'I_INHR'
+        self.rain_list['total'] = 'I_MM' if units == 'metric' else 'I_INCH'
+        self.light_list['uv'] = 'I_UV'
+        self.light_list['solar_radiation'] = 'I_RADIATION'
+
         # Build the node definition
-        LOGGER.info('Try to create node definition profile based on config.')
+        LOGGER.info('Creating node definition profile based on config.')
         write_profile.write_profile(LOGGER, self.temperature_list,
                 self.humidity_list, self.pressure_list, self.wind_list,
                 self.rain_list, self.light_list, self.lightning_list)
@@ -294,19 +304,12 @@ class Controller(polyinterface.Controller):
         except:
             LOGGER.error('Failed up push profile to ISY')
 
-        # Remove all existing notices
-        LOGGER.info("remove all notices")
-        self.removeNoticesAll()
-
-        # Add a notice?
-
     def remove_notices_all(self,command):
         LOGGER.info('remove_notices_all:')
         # Remove all existing notices
         self.removeNoticesAll()
 
     def update_profile(self,command):
-        LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
 
