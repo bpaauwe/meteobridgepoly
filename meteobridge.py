@@ -50,6 +50,15 @@ class Controller(polyinterface.Controller):
                 self.discover()
                 self.myConfig = config['customParams']
 
+                # Remove all existing notices
+                self.removeNoticesAll()
+
+                # Add notices about missing configuration
+                if self.ip == "":
+                    self.addNotice("IP address of the MeteoBridge device is required.")
+                if self.port == "":
+                    self.addNotice("Port for the MeteoBridge device is required (default is 5557).")
+
     def start(self):
         LOGGER.info('Starting MeteoBridge Node Server')
         self.check_params()
@@ -61,10 +70,13 @@ class Controller(polyinterface.Controller):
 
     def longPoll(self):
         # open socket and read data
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        mb_address = (self.ip, self.port)
-        sock.connect(mb_address)
+        if self.ip == "" or self.port == "":
+            return
+
         try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            mb_address = (self.ip, self.port)
+            sock.connect(mb_address)
             header = "Content-type: text/xml; charset=UTF-8\n\n"
             sock.sendall(header.encode())
             xmldata = sock.recv(2048)
@@ -133,6 +145,8 @@ class Controller(polyinterface.Controller):
 
             except:
                 LOGGER.error("Failure while parsing MeteoBridge data.")
+        except:
+            LOGGER.error("Failure trying to connect to MeteoBridge device.")
         finally:
             sock.close()
 
@@ -250,6 +264,10 @@ class Controller(polyinterface.Controller):
         self.removeNoticesAll()
 
         # Add a notice?
+        if self.ip == "":
+            self.addNotice("IP address of the MeteoBridge device is required.")
+        if self.port == "":
+            self.addNotice("Port for the MeteoBridge device is required (default is 5557).")
 
     def set_configuration(self, config):
         default_port = 5557
