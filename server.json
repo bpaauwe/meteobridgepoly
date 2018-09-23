@@ -1,0 +1,22 @@
+{
+    "name": "MeteoBridge",
+    "docs": "http;//www.bobsplace.com/release/WFNodeserver",
+    "type": "python3",
+    "executable": "meteobridge.py",
+    "install": "install.sh",
+    "description": "Add weather data from Meteobridge to the SY994",
+    "notice": "see http://www.meteobridge.com for more information",
+    "shortPoll": "5",
+    "longPoll": "60",
+    "profile_version": "0.1.0",
+    "credits": [
+    	{
+    		"title": "MeteoBridge: Weather Data",
+    		"author": "Bob Paauwe",
+    		"version": "0.1.0",
+    		"date": "September 20, 2018",
+    		"source": "https://github.com/bpaauwe/meteobridgepoly",
+            "license": "https://github.com/bpaauwe/meteobridgepoly/LICENSE"
+		}
+	]
+}
