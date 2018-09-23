@@ -75,38 +75,38 @@ class Controller(polyinterface.Controller):
                     LOGGER.info('   child = ' + child.tag)
                     if child.tag == 'UV':
                         self.nodes['light'].setDriver(
-                            self.light_list['uv'], float(child.get('index')))
+                           uom.LITE_DRVS['uv'], float(child.get('index')))
                         LOGGER.info('    UV index = ' + child.get('index'))
                     elif child.tag == 'SOL':
                         LOGGER.info('    Solar   = ' + child.get('rad'))
                         self.nodes['light'].setDriver(
-                            self.light_list['solar_radiation'],
+                            uom.LITE_DRVS['solar_radiation'],
                             float(child.get('rad')))
                     elif child.tag == 'RAIN':
                         LOGGER.info('    Rate    = ' + child.get('rate'))
                         LOGGER.info('    Delta   = ' + child.get('delta'))
                         LOGGER.info('    Total   = ' + child.get('total'))
                         self.nodes['rain'].setDriver(
-                            self.rain_list['rate'], float(child.get('rate')))
+                            uom.RAIN_DRVS['rate'], float(child.get('rate')))
                         self.nodes['rain'].setDriver(
-                            self.rain_list['total'], float(child.get('total')))
+                            uom.RAIN_DRVS['total'], float(child.get('total')))
                     elif child.tag == 'TH':
                         LOGGER.info('    Dewpoin = ' + child.get('dew'))
                         LOGGER.info('    Humidit = ' + child.get('hum'))
                         LOGGER.info('    Temp    = ' + child.get('temp'))
                     elif child.tag == 'THB':
                         self.nodes['temperature'].setDriver(
-                            self.temperature_list['dewpoint'],
+                            uom.TEMP_DRVS['dewpoint'],
                             float(child.get('dew')))
                         LOGGER.info('  Temp = %s to %f' % (self.temperature_list['main'], float(child.get('temp'))))
                         self.nodes['temperature'].setDriver(
-                            self.temperature_list['main'], float(child.get('temp')))
+                            uom.TEMP_DRVS['main'], float(child.get('temp')))
                         self.nodes['humidity'].setDriver(
-                            self.humidity_list['main'], float(child.get('hum')))
+                            uom.HUMD_DRVS['main'], float(child.get('hum')))
                         self.nodes['pressure'].setDriver(
-                            self.pressure_list['station'], float(child.get('press')))
+                            uom.PRES_DRVS['station'], float(child.get('press')))
                         self.nodes['pressure'].setDriver(
-                            self.pressure_list['sealevel'],
+                            wuom.PRES_DRVS['sealevel'],
                             float(child.get('seapress')))
                         LOGGER.info('    Dewpoin = ' + child.get('dew'))
                         LOGGER.info('    Humidit = ' + child.get('hum'))
@@ -115,14 +115,14 @@ class Controller(polyinterface.Controller):
                         LOGGER.info('    pressur = ' + child.get('press'))
                     elif child.tag == 'WIND':
                         self.nodes['temperature'].setDriver(
-                            self.temperature_list['windchill'],
+                            uom.TEMP_DRVS['windchill'],
                             float(child.get('chill')))
                         self.nodes['wind'].setDriver(
-                            self.wind_list['windspeed'], float(child.get('wind')))
+                            uom.WIND_DRVS['windspeed'], float(child.get('wind')))
                         self.nodes['wind'].setDriver(
-                            self.wind_list['gustspeed'], float(child.get('gust')))
+                            uom.WIND_DRVS['gustspeed'], float(child.get('gust')))
                         self.nodes['wind'].setDriver(
-                            self.wind_list['winddir'], float(child.get('dir')))
+                            uom.WIND_DRVS['winddir'], float(child.get('dir')))
                         LOGGER.info('    chill   = ' + child.get('chill'))
                         LOGGER.info('    wind    = ' + child.get('wind'))
                         LOGGER.info('    gust    = ' + child.get('gust'))
@@ -158,7 +158,7 @@ class Controller(polyinterface.Controller):
         for d in self.temperature_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.TEMP_DRVS[d],
+                        'driver': uom.TEMP_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.temperature_list[d]]
                         })
@@ -169,7 +169,7 @@ class Controller(polyinterface.Controller):
         for d in self.humidity_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.HUMD_DRVS[d],
+                        'driver': uom.HUMD_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.humidity_list[d]]
                         })
@@ -180,7 +180,7 @@ class Controller(polyinterface.Controller):
         for d in self.pressure_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.PRES_DRVS[d],
+                        'driver': uom.PRES_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.pressure_list[d]]
                         })
@@ -191,7 +191,7 @@ class Controller(polyinterface.Controller):
         for d in self.wind_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.WIND_DRVS[d],
+                        'driver': uom.WIND_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.wind_list[d]]
                         })
@@ -202,7 +202,7 @@ class Controller(polyinterface.Controller):
         for d in self.rain_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.RAIN_DRVS[d],
+                        'driver': uom.RAIN_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.rain_list[d]]
                         })
@@ -213,7 +213,7 @@ class Controller(polyinterface.Controller):
         for d in self.light_list:
             node.drivers.append(
                     {
-                        'driver': write_profile.LITE_DRVS[d],
+                        'driver': uom.LITE_DRVS[d],
                         'value': 0,
                         'uom': uom.UOM[self.light_list[d]]
                         })
