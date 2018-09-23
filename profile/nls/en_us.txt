@@ -1,0 +1,124 @@
+# controller
+ND-WeatherDisplay-NAME = Weather Display
+ND-WeatherDisplay-ICON = Weather
+CMD-ctl-DISCOVER-NAME = Re-Discover
+CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
+CMD-ctl-REMOVE_NOTICES_ALL-NAME = Remove Notices
+ST-ctl-ST-NAME = NodeServer Online
+ST-ctl-GV0-NAME = Battery
+ST-ctl-GV1-NAME = Battery
+
+# mynodetype
+ND-temperature-NAME = Temperatures
+ND-temperature-ICON = Input
+ST-139T-ST-NAME = Temperature
+ST-139T-GV0-NAME = DewPoint
+ST-139T-GV1-NAME = Windchill
+ST-139T-GV2-NAME = Heat Index
+ST-139T-GV3-NAME = Apparent Temperature
+ST-139T-GV4-NAME = Inside Temperature
+ST-139T-GV5-NAME = Extra Temperature 1
+ST-139T-GV6-NAME = Extra Temperature 2
+ST-139T-GV7-NAME = Extra Temperature 3
+ST-139T-GV8-NAME = Extra Temperature 4
+ST-139T-GV9-NAME = Extra Temperature 5
+ST-139T-GV10-NAME = Extra Temperature 6
+ST-139T-GV11-NAME = Extra Temperature 7
+ST-139T-GV12-NAME = Extra Temperature 8
+ST-139T-GV13-NAME = Extra Temperature 9
+ST-139T-GV14-NAME = Extra Temperature 10
+ST-139T-GV15-NAME = Maximum Temperature
+ST-139T-GV16-NAME = Minimum Temperature
+ST-139T-GV17-NAME = Soil Temperature
+
+ND-humidity-NAME = Humidity
+ND-humidity-ICON = Input
+ST-139H-ST-NAME = Humidity
+ST-139H-GV0-NAME = Inside Humidity
+ST-139H-GV1-NAME = Extra Humidity 1
+ST-139H-GV2-NAME = Extra Humidity 2
+ST-139H-GV3-NAME = Extra Humidity 3
+ST-139H-GV4-NAME = Extra Humidity 4
+ST-139H-GV5-NAME = Extra Humidity 5
+
+ND-pressure-NAME = Barometric Pressures
+ND-pressure-ICON = Input
+ST-139P-ST-NAME = Absolute Pressure
+ST-139P-GV0-NAME = Relative Pressure
+ST-139P-GV1-NAME = Pressure Trend
+
+ND-wind-NAME = Wind
+ND-wind-ICON = Input
+ST-139W-ST-NAME = Wind Speed
+ST-139W-GV0-NAME = Wind Direction
+ST-139W-GV1-NAME = Gust Speed
+ST-139W-GV2-NAME = Gust Direction
+ST-139W-GV3-NAME = Lull Speed
+ST-139W-GV4-NAME = Average Wind Speed
+
+ND-precipitation-NAME = Rainfall
+ND-precipitation-ICON = Input
+ST-139R-ST-NAME = Rain Rate
+ST-139R-GV0-NAME = Hourly Rainfall
+ST-139R-GV1-NAME = Daily Rainfall
+ST-139R-GV2-NAME = Weekly Rainfall
+ST-139R-GV3-NAME = Monthly Rainfall
+ST-139R-GV4-NAME = Yearly Rainfall
+ST-139R-GV5-NAME = Max Daily Rainfall
+ST-139R-GV6-NAME = Rainfall Yesterday
+
+
+ND-light-NAME = Light
+ND-light-ICON = Input
+ST-139L-ST-NAME = UV Index
+ST-139L-GV0-NAME = Solar Radiation
+ST-139L-GV1-NAME = Illumination
+
+ND-lightning-NAME = Lightning Strike
+ND-lightning-ICON = Input
+ST-139S-ST-NAME = Strikes
+ST-139S-GV0-NAME = Distance
+
+EN_RAINTYPE-0 = None
+EN_RAINTYPE-1 = Rain
+EN_RAINTYPE-2 = Hail
+EN_RAINTYPE-3 = Rain & Hail
+
+EN_TREND-0 = Falling
+EN_TREND-1 = Steady
+EN_TREND-2 = Rising
+
+EN_CARDINAL-0 = N
+EN_CARDINAL-1 = NNE
+EN_CARDINAL-2 = NE
+EN_CARDINAL-3 = ENE
+EN_CARDINAL-4 = E
+EN_CARDINAL-5 = ESE
+EN_CARDINAL-6 = SE
+EN_CARDINAL-7 = SSE
+EN_CARDINAL-8 = S
+EN_CARDINAL-9 = SSW
+EN_CARDINAL-10 = SW
+EN_CARDINAL-11 = WSW
+EN_CARDINAL-12 = W
+EN_CARDINAL-13 = WNW
+EN_CARDINAL-14 = NW
+EN_CARDINAL-15 = NNW
+
+EN_WIND_DIRECTION-0 = N
+EN_WIND_DIRECTION-1 = NNE
+EN_WIND_DIRECTION-2 = NE
+EN_WIND_DIRECTION-3 = ENE
+EN_WIND_DIRECTION-4 = E
+EN_WIND_DIRECTION-5 = ESE
+EN_WIND_DIRECTION-6 = SE
+EN_WIND_DIRECTION-7 = SSE
+EN_WIND_DIRECTION-8 = S
+EN_WIND_DIRECTION-9 = SSW
+EN_WIND_DIRECTION-10 = SW
+EN_WIND_DIRECTION-11 = WSW
+EN_WIND_DIRECTION-12 = W
+EN_WIND_DIRECTION-13 = WNW
+EN_WIND_DIRECTION-14 = NW
+EN_WIND_DIRECTION-15 = NNW
+
