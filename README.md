@@ -49,7 +49,7 @@ The settings for this node are:
 
 # Upgrading
 
-Open the Polyglot web page, go to nodeserver store and click "Update" for "WeatherFlow".
+Open the Polyglot web page, go to nodeserver store and click "Update" for "MeteoBridge".
 
 For Polyglot 2.0.35, hit "Cancel" in the update window so the profile will not be updated and ISY rebooted.  The install procedure will properly handle this for you.  This will change with 2.0.36, for that version you will always say "No" and let the install procedure handle it for you as well.
 
