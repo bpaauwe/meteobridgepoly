@@ -99,49 +99,53 @@ class Controller(polyinterface.Controller):
                             uom.LITE_DRVS['solar_radiation'],
                             float(child.get('rad')))
                     elif child.tag == 'RAIN':
-                        LOGGER.debug('    Rate    = ' + child.get('rate'))
-                        LOGGER.debug('    Delta   = ' + child.get('delta'))
-                        LOGGER.debug('    Total   = ' + child.get('total'))
-                        self.nodes['rain'].setDriver(
-                            uom.RAIN_DRVS['rate'], float(child.get('rate')))
-                        self.nodes['rain'].setDriver(
-                            uom.RAIN_DRVS['total'], float(child.get('total')))
+                        if child.get('id') == 'rain0':
+                            LOGGER.debug('    Rate    = ' + child.get('rate'))
+                            LOGGER.debug('    Delta   = ' + child.get('delta'))
+                            LOGGER.debug('    Total   = ' + child.get('total'))
+                            self.nodes['rain'].setDriver(
+                                uom.RAIN_DRVS['rate'], float(child.get('rate')))
+                            self.nodes['rain'].setDriver(
+                                uom.RAIN_DRVS['total'], float(child.get('total')))
                     elif child.tag == 'TH':
-                        LOGGER.debug('    Dewpoin = ' + child.get('dew'))
-                        LOGGER.debug('    Humidit = ' + child.get('hum'))
-                        LOGGER.debug('    Temp    = ' + child.get('temp'))
+                        if child.get('id') == 'th0':
+                            self.nodes['temperature'].setDriver(
+                                uom.TEMP_DRVS['dewpoint'],
+                                float(child.get('dew')))
+                            self.nodes['temperature'].setDriver(
+                                uom.TEMP_DRVS['main'], float(child.get('temp')))
+                            self.nodes['humidity'].setDriver(
+                                uom.HUMD_DRVS['main'], float(child.get('hum')))
+                            LOGGER.debug('    Dewpoin = ' + child.get('dew'))
+                            LOGGER.debug('    Humidit = ' + child.get('hum'))
+                            LOGGER.debug('    Temp    = ' + child.get('temp'))
                     elif child.tag == 'THB':
-                        self.nodes['temperature'].setDriver(
-                            uom.TEMP_DRVS['dewpoint'],
-                            float(child.get('dew')))
-                        self.nodes['temperature'].setDriver(
-                            uom.TEMP_DRVS['main'], float(child.get('temp')))
-                        self.nodes['humidity'].setDriver(
-                            uom.HUMD_DRVS['main'], float(child.get('hum')))
-                        self.nodes['pressure'].setDriver(
-                            uom.PRES_DRVS['station'], float(child.get('press')))
-                        self.nodes['pressure'].setDriver(
-                            uom.PRES_DRVS['sealevel'],
-                            float(child.get('seapress')))
-                        LOGGER.debug('    Dewpoin = ' + child.get('dew'))
-                        LOGGER.debug('    Humidit = ' + child.get('hum'))
-                        LOGGER.debug('    Temp    = ' + child.get('temp'))
-                        LOGGER.debug('    Sea     = ' + child.get('seapress'))
-                        LOGGER.debug('    pressur = ' + child.get('press'))
+                        if child.get('id') == 'thb0':
+                            self.nodes['pressure'].setDriver(
+                                uom.PRES_DRVS['station'], float(child.get('press')))
+                            self.nodes['pressure'].setDriver(
+                                uom.PRES_DRVS['sealevel'],
+                                float(child.get('seapress')))
+                            LOGGER.debug('    Dewpoin = ' + child.get('dew'))
+                            LOGGER.debug('    Humidit = ' + child.get('hum'))
+                            LOGGER.debug('    Temp    = ' + child.get('temp'))
+                            LOGGER.debug('    Sea     = ' + child.get('seapress'))
+                            LOGGER.debug('    pressur = ' + child.get('press'))
                     elif child.tag == 'WIND':
-                        self.nodes['temperature'].setDriver(
-                            uom.TEMP_DRVS['windchill'],
-                            float(child.get('chill')))
-                        self.nodes['wind'].setDriver(
-                            uom.WIND_DRVS['windspeed'], float(child.get('wind')))
-                        self.nodes['wind'].setDriver(
-                            uom.WIND_DRVS['gustspeed'], float(child.get('gust')))
-                        self.nodes['wind'].setDriver(
-                            uom.WIND_DRVS['winddir'], float(child.get('dir')))
-                        LOGGER.debug('    chill   = ' + child.get('chill'))
-                        LOGGER.debug('    wind    = ' + child.get('wind'))
-                        LOGGER.debug('    gust    = ' + child.get('gust'))
-                        LOGGER.debug('    direct  = ' + child.get('dir'))
+                        if child.get('id') == 'wind0':
+                            self.nodes['temperature'].setDriver(
+                                uom.TEMP_DRVS['windchill'],
+                                float(child.get('chill')))
+                            self.nodes['wind'].setDriver(
+                                uom.WIND_DRVS['windspeed'], float(child.get('wind')))
+                            self.nodes['wind'].setDriver(
+                                uom.WIND_DRVS['gustspeed'], float(child.get('gust')))
+                            self.nodes['wind'].setDriver(
+                                uom.WIND_DRVS['winddir'], float(child.get('dir')))
+                            LOGGER.debug('    chill   = ' + child.get('chill'))
+                            LOGGER.debug('    wind    = ' + child.get('wind'))
+                            LOGGER.debug('    gust    = ' + child.get('gust'))
+                            LOGGER.debug('    direct  = ' + child.get('dir'))
 
             except:
                 LOGGER.error("Failure while parsing MeteoBridge data.")
