@@ -59,5 +59,8 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
+- 0.1.1 10/26/2018
+   - Restrict parsing to only look at sensor #0 records
+   - Use TH record instead of THB record for temp/humidity values
 - 0.1.0 09/14/2018
    - Initial version released published to github
