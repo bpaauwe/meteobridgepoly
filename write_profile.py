@@ -33,6 +33,12 @@ def write_profile(logger, temperature_list, humidity_list, pressure_list,
         return False
 
     logger.info("{0} Writing profile/nodedef/nodedefs.xml".format(pfx))
+    if not os.path.exists("profile/nodedef"):
+        try:
+            os.makedirs("profile/nodedef")
+        except:
+            LOGGER.error('unable to create node definition directory.')
+
     nodedef = open("profile/nodedef/nodedefs.xml", "w")
     nodedef.write("<nodeDefs>\n")
 
