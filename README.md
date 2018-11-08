@@ -59,6 +59,9 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
+- 0.1.1 11/07/2018
+   - Create nodedef directory and empty nodedef file during install.
+   - Make sure nodedef directory exist before trying to write nodedef.xml file
 - 0.1.1 10/26/2018
    - Restrict parsing to only look at sensor #0 records
    - Use TH record instead of THB record for temp/humidity values

@@ -1,0 +1,16 @@
+<nodeDefs>
+  <nodeDef id="MeteoBridge" nodeType="139" nls="ctl">
+    <sts>
+      <st id="ST" editor="bool" />
+      <st id="GV0" editor="I_VOLTS" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DISCOVER" />
+        <cmd id="REMOVE_NOTICES_ALL" />
+        <cmd id="UPDATE_PROFILE" />
+      </accepts>
+    </cmds>
+  </nodeDef>
+</nodeDefs>
