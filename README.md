@@ -59,7 +59,9 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
-- 0.1.1 11/07/2018
+- 0.1.3 11/07/2018
+   - Fix wind speed conversion. It was doing kph -> mph and should be m/s -> mph
+- 0.1.2 11/07/2018
    - Create nodedef directory and empty nodedef file during install.
    - Make sure nodedef directory exist before trying to write nodedef.xml file
 - 0.1.1 10/26/2018
