@@ -13,8 +13,8 @@
     	{
     		"title": "MeteoBridge: Weather Data",
     		"author": "Bob Paauwe",
-    		"version": "0.1.3",
-    		"date": "November 12, 2018",
+    		"version": "0.1.4",
+    		"date": "December 15, 2018",
     		"source": "https://github.com/bpaauwe/meteobridgepoly",
             "license": "https://github.com/bpaauwe/meteobridgepoly/LICENSE"
 		}

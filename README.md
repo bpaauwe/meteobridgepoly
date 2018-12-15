@@ -59,6 +59,8 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
+- 0.1.4 12/15/2018
+   - Fix editors for temperature and rain (inches)
 - 0.1.3 11/07/2018
    - Fix wind speed conversion. It was doing kph -> mph and should be m/s -> mph
 - 0.1.2 11/07/2018
