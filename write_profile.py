@@ -195,8 +195,8 @@ if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
 
     # Test dictionaries to generate a custom nodedef file.
-    tl = {'main' : 'TEMP_F', 'dewpoint' : 'TEMP_F', 'apparent' : 'TEMP_F',
-            'extra3' : 'TEMP_F'}
+    tl = {'main' : 'I_TEMP_F', 'dewpoint' : 'I_TEMP_F', 'apparent' : 'I_TEMP_F',
+            'extra3' : 'I_TEMP_F'}
     hl = {'main' : 'I_HUMIDITY'}
     pl = {'station' : 'I_INHG', 'trend' : 'I_TREND'}
     wl = {'windspeed' : 'I_MPH', 'gustspeed' : 'I_MPH', 'winddir' : 'I_DEGREE'}

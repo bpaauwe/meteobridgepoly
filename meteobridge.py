@@ -300,9 +300,9 @@ class Controller(polyinterface.Controller):
     def setup_nodedefs(self, units):
 
         # Configure the units for each node driver
-        self.temperature_list['main'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
-        self.temperature_list['dewpoint'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
-        self.temperature_list['windchill'] = 'TEMP_F' if units == 'us' else 'TEMP_C'
+        self.temperature_list['main'] = 'I_TEMP_F' if units == 'us' else 'I_TEMP_C'
+        self.temperature_list['dewpoint'] = 'I_TEMP_F' if units == 'us' else 'I_TEMP_C'
+        self.temperature_list['windchill'] = 'I_TEMP_F' if units == 'us' else 'I_TEMP_C'
         self.humidity_list['main'] = 'I_HUMIDITY'
         self.pressure_list['station'] = 'I_INHG' if units == 'us' else 'I_MB'
         self.pressure_list['sealevel'] = 'I_INHG' if units == 'us' else 'I_MB'
@@ -310,7 +310,7 @@ class Controller(polyinterface.Controller):
         self.wind_list['gustspeed'] = 'I_MPS' if units == 'metric' else 'I_MPH'
         self.wind_list['winddir'] = 'I_DEGREE'
         self.rain_list['rate'] = 'I_MMHR' if units == 'metric' else 'I_INHR'
-        self.rain_list['total'] = 'I_MM' if units == 'metric' else 'I_INCH'
+        self.rain_list['total'] = 'I_MM' if units == 'metric' else 'I_INCHES'
         self.light_list['uv'] = 'I_UV'
         self.light_list['solar_radiation'] = 'I_RADIATION'
 
