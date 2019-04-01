@@ -8,13 +8,13 @@
     "notice": "see http://www.meteobridge.com for more information",
     "shortPoll": "5",
     "longPoll": "60",
-    "profile_version": "0.1.0",
+    "profile_version": "0.1.1",
     "credits": [
     	{
     		"title": "MeteoBridge: Weather Data",
     		"author": "Bob Paauwe",
-    		"version": "0.1.5",
-    		"date": "March 20, 2019",
+    		"version": "0.1.6",
+    		"date": "April 1, 2019",
     		"source": "https://github.com/bpaauwe/meteobridgepoly",
             "license": "https://github.com/bpaauwe/meteobridgepoly/LICENSE"
 		}

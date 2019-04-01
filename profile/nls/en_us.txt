@@ -66,6 +66,7 @@ ST-139R-GV3-NAME = Monthly Rainfall
 ST-139R-GV4-NAME = Yearly Rainfall
 ST-139R-GV5-NAME = Max Daily Rainfall
 ST-139R-GV6-NAME = Rainfall Yesterday
+ST-139R-GV7-NAME = Total Rainfall
 
 
 ND-light-NAME = Light
