@@ -59,6 +59,8 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
+- 0.1.7 12/30/2019
+   - Make units lower case so comparions work properly
 - 0.1.6 04/01/2019
    - Add name for total rainfall in the preciptition node.
 - 0.1.5 03/20/2019
