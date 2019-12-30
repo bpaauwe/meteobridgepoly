@@ -98,6 +98,8 @@ class Controller(polyinterface.Controller):
                         self.nodes['light'].setDriver(
                             uom.LITE_DRVS['solar_radiation'],
                             float(child.get('rad')))
+                        if child.get('evo') != None:
+                            LOGGER.debug('    Evaptranspiration = ' + child.get('evo')
                     elif child.tag == 'RAIN':
                         if child.get('id') == 'rain0':
                             LOGGER.debug('    Rate    = ' + child.get('rate'))
@@ -291,7 +293,7 @@ class Controller(polyinterface.Controller):
             self.ip = default_ip
 
         if 'Units' in config['customParams']:
-            self.units = config['customParams']['Units']
+            self.units = config['customParams']['Units'].lower()
         else:
             self.units = 'metric'
 
