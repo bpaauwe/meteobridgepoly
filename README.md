@@ -59,6 +59,8 @@ The MeteoBridge nodeserver keeps track of the version number and when a profile 
 
 # Release Notes
 
+- 0.1.8 12/31/2019
+   - Fix syntax error in debug log statement
 - 0.1.7 12/30/2019
    - Make units lower case so comparions work properly
 - 0.1.6 04/01/2019
